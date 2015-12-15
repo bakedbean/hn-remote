@@ -2,5 +2,7 @@ node_modules
 bower_components
 dist
 dist.bak
+build
+npm_debug.log
 .tmp
 .sass-cache
