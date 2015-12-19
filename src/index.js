@@ -5,31 +5,50 @@ import 'firebase/lib/firebase-web';
 import 'reactfire/dist/reactfire';
 import 'react/react';
 
-var Articles = React.createClass({
+var baseUrl = 'https://hacker-news.firebaseio.com/v0/';
+var user = 'whoishiring';
+
+var Article = React.createClass({
+  mixins: [ReactFireMixin],
+  getInitialState: function() {
+    return { article: {} };
+  },
+  componentWillMount: function() {
+    this.bindAsObject(new Firebase(baseUrl + 'item/' + this.props.id), 'article');
+  },
   render: function() {
-    var _this = this;
-    var createItem = function(item, index) {
-      return (
-        <li key={ index }>
-          { item['.value'] }
-        </li>
-      );
-    };
-    return <ul>{ this.props.items.map(createItem) }</ul>;
+    return (
+      <div>
+        <strong>{ (this.state.article.by) }</strong> { this.state.article.title }
+      </div>
+    );
   }
 });
 
 var App = React.createClass({
   mixins: [ReactFireMixin],
+  getInitialState: function() {
+    return { user: {} };
+  },
   componentWillMount: function() {
-    this.bindAsArray(new Firebase('https://hacker-news.firebaseio.com/v0/askstories'), 'items');
+    this.bindAsObject(new Firebase(baseUrl + 'user/' + user), 'user');
   },
   render: function() {
-    return (
-      <div>
-        <Articles items={ this.state.items } />
-      </div>
+    let post = _.first(this.state.user.submitted) - 2;
+
+    let content = (
+      <div>loading...</div>
     );
+
+    if (post) {
+      content = (
+        <div>
+          <Article id={ post } />
+        </div>
+      );
+    }
+
+    return content;
   }
 });
 
