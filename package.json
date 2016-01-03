@@ -9,11 +9,13 @@
     "stage": 1
   },
   "dependencies": {
+    "bootstrap": "^4.0.0-alpha.2",
     "es5-shim": "^4.2.0",
     "firebase": "^2.3.2",
     "jquery": "^2.1.4",
     "json3": "^3.3.2",
     "lodash": "^3.10.1",
+    "moment": "^2.11.0",
     "reactfire": "^0.5.1"
   },
   "devDependencies": {
@@ -28,6 +30,7 @@
     "raw-loader": "^0.5.1",
     "file-loader": "^0.8.4",
     "null-loader": "^0.1.1",
+    "css-loader": "^0.21.0",
     "postcss-loader": "^0.7.0",
     "sass-loader": "^3.1.1",
     "style-loader": "^0.13.0",

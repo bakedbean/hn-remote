@@ -28,6 +28,8 @@ module.exports = function makeWebpackConfig (options) {
     vendor: [
       'reactfire',
       'firebase',
+      'jquery',
+      'moment',
       'lodash',
       'react' 
     ]
@@ -108,6 +110,15 @@ module.exports = function makeWebpackConfig (options) {
     // Disabled when in test mode or not in build mode
     new ExtractTextPlugin('[name].[hash].css', {
       disable: !BUILD
+    }),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery",
+      "window.jQuery": "jquery"
+    }),
+    new webpack.ProvidePlugin({
+      moment: "moment",
+      "window.moment": "moment"
     }),
     new webpack.ProvidePlugin({
       React: "react",
