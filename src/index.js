@@ -15,8 +15,8 @@ var Post = React.createClass({
   },
   render: function() {
     return (
-      <div>
-        <p><strong>Posted { moment.unix(this.props.item.time, 'YYYYMMDD').fromNow() }</strong></p>
+      <div className="well well-lg">
+        <div>{ moment.unix(this.props.item.time, 'YYYYMMDD').fromNow() }</div>
         <div dangerouslySetInnerHTML={ this.markUp(this.props.item.text) } />
       </div>
     ); 
@@ -91,8 +91,12 @@ var App = React.createClass({
 
     if (post) {
       content = (
-        <div>
-          <Article id={ post } />
+        <div className="container-fluid">
+          <div className="row row-layout">
+            <div className="col-xs-12 col-sm-9">
+              <Article id={ post } />
+            </div>
+          </div>
         </div>
       );
     }
