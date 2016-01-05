@@ -54,13 +54,29 @@ var Article = React.createClass({
       return def.promise();
     });
   },
+  search: function(job) {
+    let distance = 0;
+
+    if (!job.text) return false;
+    let remote = job.text.toLowerCase().search('remote');
+    let onsite = job.text.toLowerCase().search('onsite');
+
+    if (remote > onsite) {
+      distance = remote - onsite;
+    } else if (remote > 0 && onsite > remote) {
+      distance = onsite - remote;
+    }
+
+    if (distance < 25 && distance > 0) return true;
+    return remote >= 0 && onsite < 0;
+  },
   componentWillMount: function() {
     this.bindAsObject(new Firebase(baseUrl + 'item/' + this.props.id), 'item');
   },
   componentDidUpdate: function() {
     if (!this.state.posts) {
       $.when(...this.posts()).then(function() {
-        this.setState({ posts: _.filter(arguments, job => job.text && job.text.search('remote') >= 0) });
+        this.setState({ posts: _.filter(arguments, job => this.search(job)) });
       }.bind(this));
     }
   },
