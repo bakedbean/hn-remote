@@ -4,7 +4,7 @@
 // Bootstrap 4
 //
 // load entire framework
-@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import "../../node_modules/bootstrap/scss/bootstrap-flex.scss";
 //
 
   @mixin border-radius($radius: $border-radius) {
@@ -24,3 +24,5 @@
       transition: $transition;
     }
   }
+
+@import "app-base.scss";

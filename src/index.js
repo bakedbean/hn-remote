@@ -14,10 +14,22 @@ var Post = React.createClass({
     return { __html: content };
   },
   render: function() {
+    let firstLine = this.props.item.text.split('\n')[0];
+    let findParagraph = firstLine.search('<p>');
+    if (findParagraph > 0) {
+      firstLine = firstLine.substring(0, findParagraph);
+    }
+    let restOfText = this.props.item.text.substring(findParagraph);
+
     return (
-      <div className="well well-lg">
-        <div>{ moment.unix(this.props.item.time, 'YYYYMMDD').fromNow() }</div>
-        <div dangerouslySetInnerHTML={ this.markUp(this.props.item.text) } />
+      <div className="card">
+        <div className="card-header">
+          <h6 className="card-subtitle text-muted">Posted: { moment.unix(this.props.item.time, 'YYYYMMDD').fromNow() }</h6>
+        </div>
+        <div className="card-block">
+          <h5 className="card-title" dangerouslySetInnerHTML={ this.markUp(firstLine) } />
+          <p className="card-text" dangerouslySetInnerHTML={ this.markUp(restOfText) } />
+        </div>
       </div>
     ); 
   }
@@ -46,16 +58,18 @@ var Article = React.createClass({
     this.bindAsObject(new Firebase(baseUrl + 'item/' + this.props.id), 'item');
   },
   componentDidUpdate: function() {
-    $.when(...this.posts()).then(function() {
-      this.setState({ posts: _.filter(arguments, job => job.text && job.text.search('remote') >= 0) });
-    }.bind(this));
+    if (!this.state.posts) {
+      $.when(...this.posts()).then(function() {
+        this.setState({ posts: _.filter(arguments, job => job.text && job.text.search('remote') >= 0) });
+      }.bind(this));
+    }
   },
   render: function() {
     let article;
     if (!this.state.posts) {
       article = (
         <div>
-          <h1>{ this.state.item.title }</h1>
+          <h1 className="header">{ this.state.item.title }</h1>
           loading...
         </div>
       );
@@ -64,9 +78,15 @@ var Article = React.createClass({
 
       article = (
         <div>
-          <h1>{ this.state.item.title }</h1>
-          <h2>Total Remote Positions Found: { this.state.posts.length }</h2>
-          { posts }
+          <h1 className="header">{ this.state.item.title }</h1>
+          <div className="container-fluid">
+            <div className="row row-layout">
+              <div className="col-xs-12 col-sm-9">
+                <h3 className="sub-header">Total Remote Positions Found: { this.state.posts.length }</h3>
+                { posts }
+              </div>
+            </div>
+          </div>
         </div>
       );
     }
@@ -91,13 +111,7 @@ var App = React.createClass({
 
     if (post) {
       content = (
-        <div className="container-fluid">
-          <div className="row row-layout">
-            <div className="col-xs-12 col-sm-9">
-              <Article id={ post } />
-            </div>
-          </div>
-        </div>
+        <Article id={ post } />
       );
     }
 
