@@ -56,7 +56,7 @@ export default React.createClass({
           <h1 className="header">{ this.state.item.title }</h1>
           <div className="container-fluid">
             <div className="row">
-              <div className="job col-xs-12 col-sm-9">
+              <div className="job col-xs-12 col-lg-9">
                 <h3 className="sub-header">Total Remote Positions Found test: { this.state.posts.length }</h3>
                 { posts }
               </div>
