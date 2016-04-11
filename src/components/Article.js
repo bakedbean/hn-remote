@@ -1,10 +1,10 @@
 'use strict';
 
+import $ from 'jquery';
+import _ from 'lodash';
 import React from 'react';
 import Firebase from 'firebase';
 import ReactFireMixin from 'reactfire';
-import $ from 'jquery';
-import _ from 'lodash';
 
 import {baseUrl} from '../connection';
 import search from '../search';
