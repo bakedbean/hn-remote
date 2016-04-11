@@ -2,13 +2,20 @@
 
 var webpack = require('webpack');
 
+function getEntrySources(sources) {
+  if (process.env.NODE_ENV !== 'production') {
+    sources.push('webpack-dev-server/client?http://localhost:8080');
+    sources.push('webpack/hot/only-dev-server');
+  }
+
+  return sources;
+}
+
 module.exports = {
   devtool: 'cheap-module-source-map',
-  entry: [
-    'webpack-dev-server/client?http://localhost:8080',
-    'webpack/hot/only-dev-server',
+  entry: getEntrySources([
     './src/index.js'
-  ],
+  ]),
   module: {
     loaders: [{
       test: /\.jsx?$/,
