@@ -4,8 +4,8 @@ export default job => {
   let distance = 0;
 
   if (!job.text) return false;
-  let remote = job.text.toLowerCase().search('remote');
-  let onsite = job.text.toLowerCase().search('onsite');
+  let remote = job.text.toLowerCase().indexOf('remote');
+  let onsite = job.text.toLowerCase().indexOf('onsite');
 
   if (remote > onsite) {
     distance = remote - onsite;
