@@ -9,3 +9,7 @@ React/Firebase Hacker News Remote Job Scraper
 2. `cd hn-remote`
 3. `npm install`
 4. `npm run dev`
+
+### Production:
+
+1. `NODE_ENV=production npm run build`
