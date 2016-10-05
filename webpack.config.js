@@ -6,13 +6,14 @@ function getEntrySources(sources) {
   if (process.env.NODE_ENV !== 'production') {
     sources.push('webpack-dev-server/client?http://localhost:8080');
     sources.push('webpack/hot/only-dev-server');
+    sources.push('react-hot-loader/patch');
   }
 
   return sources;
 }
 
 module.exports = {
-  devtool: 'cheap-module-source-map',
+  devtool: 'eval',
   entry: getEntrySources([
     './src/index.js'
   ]),
@@ -20,7 +21,7 @@ module.exports = {
     loaders: [{
       test: /\.jsx?$/,
       exclude: /node_modules/,
-      loader: 'react-hot!babel'
+      loader: 'babel'
     }, {
       test: /\.scss$/,
       loaders: ['style', 'css', 'sass']
@@ -35,17 +36,11 @@ module.exports = {
     filename: 'bundle.js'
   },
   devServer: {
-    contentBase: './dist',
-    hot: true
+    contentBase: './dist'
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
-    })
+    new webpack.optimize.UglifyJsPlugin()
   ]
 };
