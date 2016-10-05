@@ -4,6 +4,7 @@
   "description": "Hacker News Who's Hiring Remote Jobs",
   "main": "index.js",
   "scripts": {
+    "analyze": "NODE_ENV=production webpack --json --process -p | webpack-bundle-size-analyzer",
     "build": "NODE_ENV=production webpack --process -p",
     "dev": "webpack-dev-server --progress --inline --hot",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
