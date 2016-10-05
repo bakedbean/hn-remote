@@ -12,4 +12,4 @@ React/Firebase Hacker News Remote Job Scraper
 
 ### Production:
 
-1. `NODE_ENV=production npm run build`
+1. `npm run build`
