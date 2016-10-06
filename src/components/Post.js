@@ -8,8 +8,16 @@ export default class Post extends React.Component {
     item: React.PropTypes.object.isRequired
   }
 
+  state = {
+    text: false
+  }
+
   markUp(content) {
     return { __html: content };
+  }
+
+  toggleText = () => {
+    this.setState({ text: !this.state.text });
   }
 
   render() {
@@ -26,7 +34,8 @@ export default class Post extends React.Component {
       </div>
       <div className="card-block">
         <h5 className="card-title" dangerouslySetInnerHTML={ this.markUp(firstLine) } />
-        <p className="card-text" dangerouslySetInnerHTML={ this.markUp(restOfText) } />
+        <p><a href="Javascript: void(0);" onClick={this.toggleText}>{!this.state.text ? "more" : "less"} >></a></p>
+        {this.state.text && <p className="card-text" dangerouslySetInnerHTML={ this.markUp(restOfText) } />}
       </div>
     </div>;
   }
