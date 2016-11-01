@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Rebase from 're-base';
+import moment from 'moment';
 import * as conn from '../connection';
 
 import search from '../search';
@@ -14,6 +15,7 @@ let base = Rebase.createClass({
 export default class App extends React.Component {
   constructor(props) {
     super(props);
+    this.submitted = [];
     base.bindToState(conn.path + 'user/' + conn.user, {
       context: this,
       state: 'user',
@@ -28,12 +30,24 @@ export default class App extends React.Component {
   }
 
   user() {
-    let post = this.state.user.submitted.shift() - 2;
-    base.bindToState(conn.path + 'item/' + post, {
+    if (this.submitted.length < 1) {
+      this.submitted = this.state.user.submitted;
+    }
+
+    let post = this.submitted.shift();
+    base.fetch(conn.path + 'item/' + post, {
       context: this,
-      state: 'post',
-      then: this.post
-    });
+      state: 'post'
+    }).then(data => this.findPost(data));
+  }
+
+  findPost(data) {
+    if (data.dead) {
+      this.user();
+    } else if (data.title === 'Ask HN: Who is hiring? (' + moment().format('MMMM') + ' ' + moment().format('YYYY') + ')') {
+      this.setState({ post: data });
+      return this.post();
+    }
   }
 
   post() {
