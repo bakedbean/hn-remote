@@ -3,7 +3,7 @@
 export default job => {
   let distance = 0;
 
-  if (!job.text) return false;
+  if (!job || !job.text) return false;
   let remote = job.text.toLowerCase().indexOf('remote');
   let onsite = job.text.toLowerCase().indexOf('onsite');
 
