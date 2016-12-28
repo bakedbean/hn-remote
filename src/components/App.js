@@ -47,6 +47,8 @@ export default class App extends React.Component {
     } else if (data.title === 'Ask HN: Who is hiring? (' + moment().format('MMMM') + ' ' + moment().format('YYYY') + ')') {
       this.setState({ post: data });
       return this.post();
+    } else {
+      this.user();
     }
   }
 
